@@ -25,20 +25,20 @@ def apply_notch_filter(image, notch_filter):
 # Load the noisy input image (im1)
 im1 = plt.imread('image68.tif')
 
-# Apply median filter to im1 (im2)
+# Apply median filter to im1 (im2).
 im2 = median_filter(im1, size=2)
 
-# Compute the shifted Fourier spectrum of im1 (im4)
+# Compute the shifted Fourier spectrum of im1 (im4).
 im4 = fftpack.fftshift(fftpack.fft2(im1))
 
-# Define the noise points and notch filter radius
+# Define the noise points and notch filter radius.
 noise_points = [(87, 118), (123, 120), (132, 136), (169, 138)]
 notch_radius = 5
 
-# Create the custom notch filter (im5)
+# Create the custom notch filter (im5).
 im5 = create_notch_filter(im4.shape, noise_points, notch_radius)
 
-# Apply the notch filter to the Fourier spectrum of im1 (im6)
+# Apply the notch filter to the Fourier spectrum of im1 (im6).
 im3 = apply_notch_filter(im1, im5)
 
 # Plotting the figure
