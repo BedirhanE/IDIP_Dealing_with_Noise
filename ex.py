@@ -24,30 +24,30 @@ im2 = median_filter(im1, size=3)
 # Compute the shifted Fourier spectrum of im1 (im4)
 im4 = fftpack.fftshift(fftpack.fft2(im1))
 
-#[(87, 118), (123, 120), (132, 136), (169, 138)]
 # Define the noise points and notch filter radius
 noise_points = [(87, 118), (123, 120), (132, 136), (169, 138)]
 notch_radius = 5
-
 
 # Create the custom notch filter (im5)
 im5 = create_notch_filter(im4.shape, noise_points, notch_radius)
 
 # Apply the notch filter to the Fourier spectrum of im1 (im6)
-im3 = apply_notch_filter(im1, im5)
+im6 = apply_notch_filter(im1, im5)
 
 # Plotting the figure
 fig, axes = plt.subplots(2, 3, figsize=(12, 8))
 
+# First row of the figure
 axes[0, 0].imshow(im1, cmap='gray')
 axes[0, 0].set_title('Noisy Image')
 
 axes[0, 1].imshow(im2, cmap='gray')
 axes[0, 1].set_title('Median Filtered Image')
 
-axes[0, 2].imshow(im3, cmap='gray')
+axes[0, 2].imshow(im6, cmap='gray')
 axes[0, 2].set_title('Notch Filtered Image')
 
+# Second row of the figure
 axes[1, 0].imshow(np.log(1 + np.abs(im4)), cmap='gray')
 axes[1, 0].set_title('Fourier Spectrum of Noisy Image')
 
