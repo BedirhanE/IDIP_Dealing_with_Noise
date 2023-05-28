@@ -25,7 +25,7 @@ im2 = median_filter(im1, size=3)
 # Compute the shifted Fourier spectrum of im1 (im4)
 im4 = fftpack.fftshift(fftpack.fft2(im1))
 
-#[(87, 118), (123, 120), (132, 136), (169, 138)]
+#[(87, 118), (123, 120), (132, 136), (169, 138)] image local coordinates.
 # Define the noise points and notch filter radius
 noise_points = [(87, 118), (123, 120), (132, 136), (169, 138)]
 notch_radius = 5
