@@ -7,7 +7,7 @@ from scipy.ndimage import median_filter
 def create_notch_filter(image_shape, noise_points, notch_radius):
     # Create an array of ones with the same shape as the image
     im5 = np.ones(image_shape)
-    # Set the pixels around the noise points to zero to create the notch filter
+    # Set the pixels around the noise points to zero to create the notch filter.
     for point in noise_points:
         x, y = point
         im5[x-notch_radius:x+notch_radius+1, y-notch_radius:y+notch_radius+1] = 0
