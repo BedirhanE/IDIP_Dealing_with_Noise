@@ -3,16 +3,22 @@ import matplotlib.pyplot as plt
 from scipy import fftpack
 from scipy.ndimage import median_filter
 
+#190316054 BEDİRHAN ELÇİN
 def create_notch_filter(image_shape, noise_points, notch_radius):
+    # Create an array of ones with the same shape as the image
     im5 = np.ones(image_shape)
+    # Set the pixels around the noise points to zero to create the notch filter
     for point in noise_points:
         x, y = point
         im5[x-notch_radius:x+notch_radius+1, y-notch_radius:y+notch_radius+1] = 0
     return im5
 
 def apply_notch_filter(image, notch_filter):
+    # Shift and compute the 2D Fourier transform of the image
     im4 = fftpack.fftshift(fftpack.fft2(image))
+    # Apply the notch filter to the Fourier spectrum
     im6 = im4 * notch_filter
+    # Compute the inverse Fourier transform and shift back
     return np.abs(fftpack.ifft2(fftpack.ifftshift(im6)))
 
 
@@ -20,7 +26,7 @@ def apply_notch_filter(image, notch_filter):
 im1 = plt.imread('image68.tif')
 
 # Apply median filter to im1 (im2)
-im2 = median_filter(im1, size=3)
+im2 = median_filter(im1, size=2)
 
 # Compute the shifted Fourier spectrum of im1 (im4)
 im4 = fftpack.fftshift(fftpack.fft2(im1))
