@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import fftpack
-from scipy.ndimage import median_filter
+from scipy.ndimage import median_filter, gaussian_filter
 
 
 def create_notch_filter(image_shape, noise_points, notch_radius):
@@ -25,15 +25,13 @@ im2 = median_filter(im1, size=3)
 # Compute the shifted Fourier spectrum of im1 (im4)
 im4 = fftpack.fftshift(fftpack.fft2(im1))
 
-#[(87, 118), (123, 120), (132, 136), (169, 138)]
 # Define the noise points and notch filter radius
 noise_points = [(87, 118), (123, 120), (132, 136), (169, 138)]
 notch_radius = 5
 
-
 # Create the custom notch filter (im5)
 im5 = create_notch_filter(im4.shape, noise_points, notch_radius)
-
+im5 = gaussian_filter(im5, sigma=notch_radius)
 # Apply the notch filter to the Fourier spectrum of im1 (im6)
 im3 = apply_notch_filter(im1, im5)
 
@@ -57,6 +55,13 @@ axes[1, 1].set_title('Notch Filters')
 
 axes[1, 2].imshow(np.log(1 + np.abs(im4 * im5)), cmap='gray')
 axes[1, 2].set_title('Fourier Spectrum of Filtered Image')
+
+# Mark noise points as circles on the images
+for point in noise_points:
+    x, y = point
+    axes[0, 0].add_patch(plt.Circle((y, x), notch_radius, color='r', fill=False))
+    axes[1, 0].add_patch(plt.Circle((y, x), notch_radius, color='r', fill=False))
+    axes[1, 1].add_patch(plt.Circle((y, x), notch_radius, color='r', fill=False))
 
 plt.subplots_adjust(wspace=0.2, hspace=0.3)
 plt.show()

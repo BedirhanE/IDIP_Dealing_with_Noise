@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 from scipy import fftpack
 from scipy.ndimage import median_filter
 
-im1 = plt.imread('image60.tif')
+im1 = plt.imread('image68.tif')
 im2 = median_filter(im1, size=3)
 im4 = fftpack.fftshift(fftpack.fft2(im1))
 #[(87, 118), (123, 120), (132, 136), (169, 138)]]
-noise_points = [(x, y) for x, y in [(108, 120), (121, 124), (135, 132), (148,136)]]
+noise_points = [(x, y) for x, y in [(87, 118), (123, 120), (132, 136), (169, 138)]]
 im5 = np.ones_like(im4)
 for point in noise_points:
     x, y = point
