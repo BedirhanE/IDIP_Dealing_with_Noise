@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy import fftpack
 from scipy.ndimage import median_filter
 
+#Bedirhan Elçin
 
 def create_notch_filter(image_shape, noise_points, notch_radius):
     im5 = np.ones(image_shape)
