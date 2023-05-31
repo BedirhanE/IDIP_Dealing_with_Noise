@@ -9,6 +9,8 @@ def create_notch_filter(image_shape, noise_points, notch_radius):
     im5 = np.ones(image_shape)
     for point in noise_points:
         x, y = point
+        ycoords, x_coords = np.ogrid[:im4.shape[0], :im4.shape[1]]
+
         im5[x-notch_radius:x+notch_radius+1, y-notch_radius:y+notch_radius+1] = 0
     return im5
 
@@ -18,7 +20,7 @@ def apply_notch_filter(image, notch_filter):
     return np.abs(fftpack.ifft2(fftpack.ifftshift(im6)))
 
 # Load the noisy input image (im1)
-im1 = plt.imread('image68.tif')
+im1 = plt.imread('image63.tif')
 
 # Apply median filter to im1 (im2)
 im2 = median_filter(im1, size=3)
@@ -28,9 +30,9 @@ im4 = fftpack.fftshift(fftpack.fft2(im1))
 
 #[(87, 118), (123, 120), (132, 136), (169, 138)] image local coordinates.
 # Define the noise points and notch filter radius
-noise_points = [(87, 118), (123, 120), (132, 136), (169, 138)]
+noise_points = [(114, 114), (124, 122), (132, 134), (142, 142)]
 notch_radius = 5
-
+# [(114, 114), (124, 122), (132, 134), (142, 142)]  ysm image local coordinates
 
 # Create the custom notch filter (im5)
 im5 = create_notch_filter(im4.shape, noise_points, notch_radius)
